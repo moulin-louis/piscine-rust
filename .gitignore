@@ -4,6 +4,6 @@
 ./idea
 */./idea
 */*/./idea
-.Cargo.lock
-*/.Cargo.lock
-*/*/.Cargo.lock
+./Cargo.lock
+*/./Cargo.lock
+*/*/./Cargo.lock
