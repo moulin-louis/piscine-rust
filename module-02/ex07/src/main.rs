@@ -11,7 +11,7 @@ enum ParseError {
     NotEnoughArguments,
 }
 
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq)]
 enum Cell {
     Dead,
     Alive,
@@ -32,7 +32,7 @@ impl Cell {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Clone, PartialEq)]
 struct Board {
     width: usize,
     height: usize,
@@ -55,7 +55,7 @@ impl Board {
         Board {
             width,
             height,
-            cells: cells_vec.clone(),
+            cells: cells_vec,
         }
     }
 
@@ -163,9 +163,21 @@ fn main() {
             return;
         }
     };
-    for _idx in 0..5 {
-        board.print(false);
+    let mut clean: bool = false;
+    loop {
+        board.print(clean);
+        clean = true;
         board.step();
-        thread::sleep(Duration::from_secs(1));
+        let mut all_dead = true;
+        for cell in &board.cells {
+            if cell.is_alive() {
+                thread::sleep(Duration::from_secs(1));
+                all_dead = false;
+                break;
+            }
+        }
+        if all_dead {
+            break;
+        }
     }
 }
